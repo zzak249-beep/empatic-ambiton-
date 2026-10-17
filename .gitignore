@@ -1,0 +1,19 @@
+# SECRETOS: nunca subas esto
+.env
+*.env
+!_env.example
+
+# estado del bot
+data/
+state.json
+sims.json
+stats.json
+live_trades.json
+*.tmp
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/

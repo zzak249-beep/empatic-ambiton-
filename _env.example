@@ -1,0 +1,58 @@
+# =====================================================================
+#  GRANVILLE V5 → BINGX → TELEGRAM        (copia este fichero a .env)
+#  En Railway: pega estas variables en  Variables → Raw Editor
+# =====================================================================
+
+# ---------- Telegram (obligatorio) ----------
+TELEGRAM_TOKEN=
+TELEGRAM_CHAT_ID=
+
+# ---------- Modo ----------
+# signals = solo avisa por Telegram (no necesita claves de BingX)   <-- EMPIEZA AQUÍ
+# demo    = opera en la cuenta VIRTUAL (VST) de BingX, sin dinero real
+# live    = DINERO REAL (exige además LIVE_CONFIRM)
+BOT_MODE=signals
+# LIVE_CONFIRM=SI_OPERAR_CON_DINERO_REAL
+BINGX_API_KEY=
+BINGX_API_SECRET=
+
+# ---------- Qué libro opera y con qué filtro ----------
+# BOOK: Base | V2 | V3 | V4   (V2 = filtros de TF mayor/volumen/sesión + stop estructural, como el Pine por defecto)
+BOOK=V2
+# EDGE_FILTER:
+#   good   = solo códigos con ventaja DEMOSTRADA (n >= MIN_N y límite inferior > 0)   <-- recomendado
+#   notbad = todos menos los demostrados malos
+#   none   = todas las señales (como el Pine por defecto)
+EDGE_FILTER=good
+
+# ---------- Riesgo (empieza pequeño) ----------
+RISK_PCT=0.5            # % del capital arriesgado por operación (el Pine usa 1.0)
+MAX_LEV=10              # nocional máximo = capital x MAX_LEV (como el Pine)
+ACCOUNT_USDT=1000       # solo para el tamaño sugerido en los avisos (en demo/live se usa el equity real)
+LIVE_LEVERAGE=5         # tope real de apalancamiento en el exchange (se usa el menor de MAX_LEV y este)
+LIVE_MAX_POSITIONS=3
+LIVE_MAX_PER_SIDE=2
+LIVE_DAILY_LOSS_PCT=2   # si se pierde esto en el día (UTC), no se abren más operaciones
+LIVE_MAX_SLIP_R=0.25    # no entra si el precio ya se movió más de 0.25R desde la señal
+LIVE_EXCLUDE_REGEX=^NCS # excluye las acciones tokenizadas (NCSK...) de la ejecución real
+# LIVE_CODES=G1,G2,G3,G5,G6,G7   # opcional: lista blanca extra de códigos (vacío = los que permita el filtro de ventaja)
+
+# ---------- Qué escanear ----------
+TIMEFRAMES=15m          # la estrategia está calibrada para 15m (HTF 4h, intermedio 1h)
+MIN_VOLUME_24H_USDT=2000000
+EXCLUDE_REGEX=          # p. ej. ^NCS para no escanear acciones tokenizadas
+# DIRECTION=both        # both | long | short
+
+# ---------- Persistencia (en Railway: Volume montado en /data) ----------
+# DATA_DIR=/data
+
+# ---------- Avisos ----------
+NOTIFY_ONLY_EDGE=0      # 1 = avisa solo de señales con ventaja demostrada
+MAX_SIGNALS_PER_SCAN=10
+SUMMARY_HOUR_UTC=8
+
+# ---------- Parámetros de la estrategia (valores por defecto = los del Pine V5; no hace falta tocarlos) ----------
+# MAX_BARS=18  TP1_R=1  TP2_R=2  TP1_FRAC=0.5  MOVE_BE=1  COST_PCT=0.12  PARTIAL_MODE=1  TP_SINGLE_R=1.5
+# MIN_N=12  Z_CONF=0.5  HALF_LIFE=40  PRIOR_N=20
+# HTF_TF=4h  HTF2_TF=1h  HAP_TF1=1h  HAP_TF2=4h
+# USE_BTC=0  USE_ER=0  USE_ATR_PCT=0  USE_ACTIVE_HRS=0  USE_VWAP_EXT=1
